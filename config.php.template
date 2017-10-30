@@ -1,0 +1,9 @@
+<?php
+
+# API Info
+$api_url = 'https://web00-zbx.admin.pitbpa1/api_jsonrpc.php';
+$api_user = '';
+$api_pass = 'Base64Encode';
+
+?>
+
