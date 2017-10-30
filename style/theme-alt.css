@@ -1,0 +1,206 @@
+/* ************************************************************** */
+/* ***  Theme css for Zabbix Dashboard                        *** */
+/* ***  Build with my brain, so things could be much better   *** */
+/* ************************************************************** */
+
+/* we use ubuntu clients for our dashboard displays hence the call to the "Ubuntu" font */
+body { font-size: 14px;
+	font-family: Verdana,Helvetica;
+	background: #3C3C3C;
+	}
+/* bg-two we used in tests */
+body#bg-one {
+	position:relative;
+	margin-top: 36px;
+	margin-right:auto;
+	margin-bottom:0px;
+	margin-left:auto;
+	}
+body#bg-two {
+	width: 100%;
+	position:relative;
+	margin: 36px auto;
+	}
+
+.hostbox {
+	height: 95px;
+	width: 242px;
+	position:relative;
+	padding: 8px;
+	margin-top: 10px;
+	margin-right:0px;
+	margin-bottom:0px;
+	margin-left:10px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	box-shadow: 0px 0px 5px #1E1E1E;
+	}
+
+/* host is ok box */
+.ok {
+	background-color: #4B9C05;
+	border: 1px solid #0D0D0D;
+	box-shadow: 2px 2px 5px black;
+	color: #FFF;
+	}
+/* host is not ok, "information triggered" */
+.nok1 {
+	background-color: #99CC00;
+	box-shadow: 2px 2px 5px black;
+	border: 1px solid #0D0D0D;
+	}
+/* host is not ok, "warning triggered" */
+.nok2 {
+	background-color: #F3E427;
+	box-shadow: 2px 2px 5px black;
+	border: 1px solid #0D0D0D;
+	}
+/* host is not ok, "average triggered" */
+.nok3 {
+	background-color: #FA9321;
+	box-shadow: 2px 2px 5px black;
+	border: 1px solid #0D0D0D;
+	}
+/* host is not ok, "high triggered" */
+.nok4 {
+	background-color: #E94B16;
+	box-shadow: 2px 2px 5px black;
+	border: 1px solid #0D0D0D;
+	}
+/* host is not ok, "disaster triggered" */
+.nok5 {
+	background-color: #B10505;
+	box-shadow: 2px 2px 5px black;
+	border: 1px solid #0D0D0D;
+	}
+
+.js-masonry {
+	background-color: #303030;
+	padding: 0px 0px 10px 0px;
+	border-style: solid none solid none;
+	border-width: 1px;
+	border-color: black;
+	}
+
+.config {
+	background-color: #303030;
+	padding: 10px 35% 10px 35%;
+	border-style: solid none solid none;
+	border-width: 1px;
+	border-color: black;
+	}
+
+/* futher box markups */
+.group-title {
+	font-family: Verdana,Helvetica;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: top;
+	color: #FFF;
+	padding: 5px 5px 5px 0px;
+	}
+
+.title {
+	font-family: Verdana,Helvetica;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	color: #FFF;
+	padding: 0px 0px 5px 0px;
+	}
+
+.hostid {
+	font-family: Verdana,Helvetica;
+	font-size: 8px;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	color: #D7D7D7;
+	}
+
+.ok .hostid {color:#232323;} /* more readable text */
+.ok .title{color: #232323;} /* more readable text */
+
+.nok2 .hostid {color:#232323;} /* more readable text */
+.nok2 .title{color: #232323;} /* more readable text */
+.nok3 .hostid {color:#232323;} /* more readable text */
+.nok3 .title{color: #232323;} /* more readable text */
+.nok4 .hostid {color:#232323;} /* more readable text */
+.nok4 .title{color: #232323;} /* more readable text */
+
+.description {
+	font-family: Verdana,Helvetica;
+	margin: 3px 0;
+	border:none;
+	background: #fff;
+	font-size: 12px;
+	padding: 5px 5px 5px 20px;
+	line-height:100%;
+	word-break: break-all;
+	box-shadow: 1px 1px 5px black;
+	border-radius: 2px;
+	}
+
+
+/* created small images that match the trigger color */
+div.description.nok1 {
+	background: #FFF url("../images/nok1.png") no-repeat 5px 5px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+div.description.nok2 {
+	background: #FFF url("../images/nok2.png") no-repeat 5px 5px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+div.description.nok3 {
+	background: #FFF url("../images/nok3.png") no-repeat 5px 5px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+div.description.nok4 {
+	background: #FFF url("../images/nok4.png") no-repeat 5px 5px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+div.description.nok5 {
+	background: #FFF url("../images/nok5.png") no-repeat 5px 5px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+div#timestamp {
+	position: absolute;
+	top: -40px;
+	left:10px;
+	z-index:100;
+	padding: 10px;
+	color: #E8E8E8;
+	}
+div#date {
+	font-size: 16px;
+	text-align: center;
+	}
+div#time { font-size: 36px;
+	#position: relative;
+	#top: -7px;
+	text-align: center;
+	padding-top: 3px;
+	}
+div#sheetname {
+	position: absolute;
+	top: -22px;
+	right: 20px;
+	z-index: 200;
+	font-size: 36px;
+	color: #E8E8E8;
+	}
+
+
