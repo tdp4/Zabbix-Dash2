@@ -10,5 +10,8 @@ $reload_time = 60000;
 
 # path on web server
 $context = '/zabbix-dash2';
+
+# Host Group filter in Regex
+$host_group_filter = '/^Dash\//';
 ?>
 

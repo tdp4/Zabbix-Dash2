@@ -85,7 +85,8 @@ body#bg-two {
 
 .config {
 	background-color: #303030;
-	padding: 10px 35% 10px 35%;
+	margin: auto;
+	width: 600px;
 	border-style: solid none solid none;
 	border-width: 1px;
 	border-color: black;

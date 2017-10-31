@@ -1,6 +1,8 @@
 <?php
-
-include('config.php');
+if ((include('config.php')) == FALSE) {
+	header("location: no_config.php");
+	exit;
+}
 
 // load the Zabbix Php API which is included in this build (tested on Zabbix v2.2.2)
 require 'lib/php/ZabbixApiAbstract.class.php';
@@ -19,7 +21,7 @@ $api->setDefaultParams(array(
 if (isset($_GET['gid'])) {
 	$groupids = explode(',', $_GET['gid']);
 } else {
-	$groupids = array('28','29','30','31');
+	$groupids = array('1');
 }
 
 if (isset($_GET['name'])) {
@@ -29,15 +31,6 @@ if (isset($_GET['name'])) {
 }
 ?>
 <!DOCTYPE html>
-<?php
-
-if (isset($_SERVER['CONTEXT_PREFIX'])) {
-	$context = $_SERVER['CONTEXT_PREFIX'];
-} else {
-	$context = '';
-}
-
-?>
 <html>
 <head>
         <meta charset="UTF-8">
@@ -156,7 +149,7 @@ foreach($triggers as $trigger) {
 								$search = array('{HOSTNAME}', '{HOST.NAME}');
 								$description = str_replace($search, "", $description);
 								// View
-								echo "<div class=\"description nok" . $priority ."\">" . $description . "</div>";
+								echo "<div class=\"description nok" . $priority ."\" title=\"" . $description . "\">" . $description . "</div>";
 							} else {
 								break;
 							}

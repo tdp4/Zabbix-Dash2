@@ -1,9 +1,7 @@
 <?php
-
-if (isset($_SERVER['CONTEXT_PREFIX'])) {
-	$context = $_SERVER['CONTEXT_PREFIX'];
-} else {
-	$context = '';
+if ((include('config.ph)) == FALSE) {
+	header("location: no_config.php");
+	exit;
 }
 
 if (isset($_POST['config'])) {
@@ -22,14 +20,7 @@ if (isset($_POST['config'])) {
 	}
 
 	$url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . $context . "/dash.php?name=" . urlencode($header) . "&gid=" . implode(',', $list);
-
-	#header("location:" . $url);
-	#exit;
 }
-
-
-include('config.php');
-$reload_enabled = false;
 
 // load the Zabbix Php API which is included in this build (tested on Zabbix v2.2.2)
 require 'lib/php/ZabbixApiAbstract.class.php';
@@ -58,8 +49,6 @@ $api->setDefaultParams(array(
 		<script src="<?php print $context; ?>/lib/js/jquery.mobile-1.4.5.min.js"></script>
         <!-- added the masonry js so all blocks are better alligned -->
         <script src="<?php print $context; ?>/lib/js/masonry.pkgd.min.js"></script>
-        <!-- Removed this temporary because I disliked the look -->
-        <!-- <body class="js-masonry"  data-masonry-options='{ "columnWidth": 250, "itemSelector": ".groupbox" }'> -->
 </head>
 <!-- Second piece of js to gracefully reload the page (value in ms) -->
 <?php if ($reload_enabled == true) { ?>
@@ -76,27 +65,27 @@ $api->setDefaultParams(array(
 
 <!-- START GET RENDER DATE - Which will show date and time of generating this file -->
 <div data-role="header">
-<div id="timestamp">
-    <div id="date"><?php echo date("d F Y", time()); ?></div>
-    <div id="time"><?php echo date("H:i", time()); ?></div>
-</div>
-<!-- END GET RENDER DATE -->
-<!-- We could use the Zabbix HostGroup name here, but would not work in a nice way when using a dozen of hostgroups, yet! So we hardcoded it here. -->
-<div id="sheetname"><?php print "Configuration"; ?></div>
+	<div id="timestamp">
+		<div id="date"><?php echo date("d F Y", time()); ?></div>
+		<div id="time"><?php echo date("H:i", time()); ?></div>
+	</div>
+	<!-- END GET RENDER DATE -->
+	<!-- We could use the Zabbix HostGroup name here, but would not work in a nice way when using a dozen of hostgroups, yet! So we hardcoded it here. -->
+	<div id="sheetname"><?php print "Configuration"; ?></div>
 </div>
 <div data-role="page" data-theme="a">
-<div class="groupbox">
-<div class="group-title">CONFIGURE YOUR SCREEN</div>
+	<div class="groupbox">
+		<div class="group-title">CONFIGURE YOUR SCREEN</div>
 
-<?php if (isset($url)) { ?>
-	<div data-role="content" data-theme="c">
-		<center><a href="<?php print $url; ?>" target="_blank">Screen: <?php print $header; ?></a></center>
-	</div>
-<?php } ?>
+		<?php if (isset($url)) { ?>
+		<div data-role="content" data-theme="a">
+			<center>Screen: <a href="<?php print $url; ?>" target="_blank"><?php print $header; ?></a></center>
+		</div>
+		<?php } ?>
 
-<div class="config">
-<div data-role="content" data-theme="b">
-<?php
+		<div class="config">
+			<div data-role="content" data-theme="b">
+			<?php
 
 $groups = $api->hostgroupGet(array(
        'output' => array('name'),
@@ -109,21 +98,37 @@ $groups = $api->hostgroupGet(array(
        'sortfield' => 'name'
     ));
 
-?>
-<form method="post">
-	<label for="headername">Header Title (top right corner):</label>
-	<input type="text" name="headername" id="headername" value="">
-	<input type="hidden" name="config" id="config" value="x">
-	<fieldset data-role="controlgroup">
-		<legend>Select Host Groups to Display:</legend>
-<?php
+			?>
+			<form method="post">
+				<label for="headername">Header Title (top right corner):</label>
+				<input type="text" name="headername" id="headername" value="" placeholder="Name for your Dashboard" />
+				<input type="hidden" name="config" id="config" value="x" />
+				<fieldset data-role="controlgroup">
+					<legend>Select Host Groups to Display:</legend>
+					<?php
+$hgcount = 0;
+$disable_submit = false;
 foreach($groups as $group) {
-	print "<input type=\"checkbox\" name=\"hg_" . $group->groupid . "\" id=\"hg_" . $group->groupid . "\"><label for=\"hg_" . $group->groupid . "\">" . $group->name . "</label>";
+	if (isset($host_group_filter) && preg_match($host_group_filter, $group->name)) {
+		print "<input type=\"checkbox\" name=\"hg_" . $group->groupid . "\" id=\"hg_" . $group->groupid . "\"><label for=\"hg_" . $group->groupid . "\">" . $group->name . "</label>";
+		$hgcount ++;
+	}
 }
-?>
-	</fieldset>
-	<button class="ui-shadow ui-btn ui-corner-all" type="submit" id="submit">Submit</button>
-</form>
-</div></div></div></div></div>
+
+if ($hgcount == 0) {
+		print "<div data-role=\"content\" data-theme=\"a\">No Hostgroups match filter of '" . $host_group_filter . "'.  Please create a hostgroup to match this filter or change the filter in your config file.</div>";
+		$disable_submit = true;
+}
+	
+					?>
+				</fieldset>
+				<button class="ui-shadow ui-btn ui-corner-all" type="submit" id="submit" <?php if ($disable_submit) { echo "disabled"; }?>>Submit</button>
+			</form>
+		</div>
+		<div data-role="footer" data-position="fixed" data-theme="b">
+			<h1>Zabbix-Dash2 - <a href="https://github.com/tdp4/Zabbix-Dash2">https://github.com/tdp4/Zabbix-Dash2</a></h1>
+		</div>
+	</div>
+</div>
 </body>
 </html>
