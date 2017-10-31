@@ -3,7 +3,12 @@
 # API Info
 $api_url = 'https://web00-zbx.admin.pitbpa1/api_jsonrpc.php';
 $api_user = '';
-$api_pass = 'Base64Encode';
+$api_pass = 'Base64Encode'; 
 
+# Time in milliseconds.  1000 = 1 second
+$reload_time = 60000;
+
+# path on web server
+$context = '/zabbix-dash2';
 ?>
 
