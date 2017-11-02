@@ -1,5 +1,5 @@
 <?php
-if ((include('config.ph)) == FALSE) {
+if ((include('config.php')) == FALSE) {
 	header("location: no_config.php");
 	exit;
 }
